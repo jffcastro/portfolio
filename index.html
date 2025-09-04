@@ -903,7 +903,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cs2ValueInput.value = portfolio.cs2 && typeof portfolio.cs2.value === 'number' ? portfolio.cs2.value : '';
         cs2SaveBtn.addEventListener('click', () => {
             const val = parseFloat(cs2ValueInput.value) || 0;
-            portfolio.cs2 = { value: val, currency: 'EUR' };
+            portfolio.cs2 = { value: val, currency: 'USD' };
             saveData();
             renderPortfolio();
         });
