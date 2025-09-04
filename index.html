@@ -936,17 +936,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function calculateGainLoss(asset, currentPrice, currency) {
-        if (!currentPrice) return '...';
-        let costBasis = asset.purchasePrice * asset.quantity;
-        let currentValue = currentPrice * asset.quantity;
-        if (currency === 'USD') {
-            costBasis = costBasis / eurUsdRate;
-            currentValue = currentValue / eurUsdRate;
-        }
-        const gainLoss = currentValue - costBasis;
-        const gainLossPercent = (gainLoss / costBasis) * 100;
-        const gainClass = gainLoss >= 0 ? 'positive-gain' : 'negative-gain';
-        return `<span class="${gainClass}">€${gainLoss.toFixed(2)} (${gainLossPercent.toFixed(2)}%)</span>`;
+    if (!currentPrice) return '...';
+    let costBasis = asset.purchasePrice * asset.quantity;
+    let currentValue = currentPrice * asset.quantity;
+    let currencySymbol = currency === 'USD' ? '$' : '€';
+    // No conversion: show gain/loss in asset's currency
+    const gainLoss = currentValue - costBasis;
+    const gainLossPercent = (gainLoss / costBasis) * 100;
+    const gainClass = gainLoss >= 0 ? 'positive-gain' : 'negative-gain';
+    return `<span class="${gainClass}">${currencySymbol}${gainLoss.toFixed(2)} (${gainLossPercent.toFixed(2)}%)</span>`;
     }
 
     async function renderStock(stock, cachedPrice) {
