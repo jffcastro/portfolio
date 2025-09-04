@@ -1260,15 +1260,6 @@ document.addEventListener('DOMContentLoaded', () => {
     debugOutput += `CS2: ${cs2Value.toFixed(2)}\n`;
     debugOutput += `Total: ${(stocksValue + etfsValue + cryptoValue + staticValue + cs2Value).toFixed(2)}\n`;
     window.historyPortfolioDebug = debugOutput;
-        window._portfolioDebug = window._portfolioDebug || {};
-        window._portfolioDebug.history = {
-            stocks: stocksValue,
-            etfs: etfsValue,
-            crypto: cryptoValue,
-            static: staticValue,
-            cs2: cs2Value,
-            total: totalValue
-        };
         // Calculate current values for each asset type
     let stocksValue = 0, etfsValue = 0, cryptoValue = 0, staticValue = 0, cs2Value = 0;
     let savingsValue = 0, emergencyValue = 0, cashValue = 0;
