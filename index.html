@@ -690,16 +690,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
     }
     function renderPortfolio() {
-        // DEBUG: Show asset breakdown for live portfolio value
-        window._portfolioDebug = window._portfolioDebug || {};
-        window._portfolioDebug.live = {
-            stocks: stocksValue,
-            etfs: etfsValue,
-            crypto: cryptoValue,
-            static: staticValue,
-            cs2: cs2Value,
-            total: stocksValue + etfsValue + cryptoValue + staticValue + cs2Value
-        };
         function updateTotalValueBar(eurValue) {
             const elEur = document.getElementById('portfolio-total-eur');
             const elUsd = document.getElementById('portfolio-total-usd');
@@ -1261,7 +1251,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // --- VALIDATE TO HISTORY BUTTON ---
     document.getElementById('validate-history-btn').addEventListener('click', () => {
-        // DEBUG: Show asset breakdown for history calculation
+     // DEBUG: Show asset breakdown for history calculation
+    let debugOutput = '--- HISTORY PORTFOLIO BREAKDOWN ---\n';
+    debugOutput += `Stocks: ${stocksValue.toFixed(2)}\n`;
+    debugOutput += `ETFs: ${etfsValue.toFixed(2)}\n`;
+    debugOutput += `Crypto: ${cryptoValue.toFixed(2)}\n`;
+    debugOutput += `Static: ${staticValue.toFixed(2)}\n`;
+    debugOutput += `CS2: ${cs2Value.toFixed(2)}\n`;
+    debugOutput += `Total: ${(stocksValue + etfsValue + cryptoValue + staticValue + cs2Value).toFixed(2)}\n`;
+    window.historyPortfolioDebug = debugOutput;
         window._portfolioDebug = window._portfolioDebug || {};
         window._portfolioDebug.history = {
             stocks: stocksValue,
