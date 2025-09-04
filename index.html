@@ -690,6 +690,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
     }
     function renderPortfolio() {
+        // DEBUG: Show asset breakdown for live portfolio value
+        window._portfolioDebug = window._portfolioDebug || {};
+        window._portfolioDebug.live = {
+            stocks: stocksValue,
+            etfs: etfsValue,
+            crypto: cryptoValue,
+            static: staticValue,
+            cs2: cs2Value,
+            total: stocksValue + etfsValue + cryptoValue + staticValue + cs2Value
+        };
         function updateTotalValueBar(eurValue) {
             const elEur = document.getElementById('portfolio-total-eur');
             const elUsd = document.getElementById('portfolio-total-usd');
@@ -1251,6 +1261,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // --- VALIDATE TO HISTORY BUTTON ---
     document.getElementById('validate-history-btn').addEventListener('click', () => {
+        // DEBUG: Show asset breakdown for history calculation
+        window._portfolioDebug = window._portfolioDebug || {};
+        window._portfolioDebug.history = {
+            stocks: stocksValue,
+            etfs: etfsValue,
+            crypto: cryptoValue,
+            static: staticValue,
+            cs2: cs2Value,
+            total: totalValue
+        };
         // Calculate current values for each asset type
     let stocksValue = 0, etfsValue = 0, cryptoValue = 0, staticValue = 0, cs2Value = 0;
     let savingsValue = 0, emergencyValue = 0, cashValue = 0;
