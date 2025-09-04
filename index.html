@@ -1337,6 +1337,7 @@ document.addEventListener('DOMContentLoaded', () => {
     debugOutput += `CS2: ${cs2Value.toFixed(2)}\n`;
     debugOutput += `Total: ${(stocksValue + etfsValue + cryptoValue + staticValue + cs2Value).toFixed(2)}\n`;
     window.historyPortfolioDebug = debugOutput;
+            console.log(debugOutput);
     });
     
     // --- DATA HANDLING (Save/Load/CSV) ---
