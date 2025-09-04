@@ -171,6 +171,7 @@
                                 <th class="py-2 px-4">Quantity</th>
                                 <th class="py-2 px-4">Avg. Price</th>
                                 <th class="py-2 px-4">Price</th>
+                                <th class="py-2 px-4">Total Invested</th>
                                 <th class="py-2 px-4">Value</th>
                                 <th class="py-2 px-4">Gain/Loss</th>
                                 <th class="py-2 px-4">Actions</th>
@@ -199,6 +200,7 @@
                                 <th class="py-2 px-4">Quantity</th>
                                 <th class="py-2 px-4">Avg. Price</th>
                                 <th class="py-2 px-4">Price</th>
+                                <th class="py-2 px-4">Total Invested</th>
                                 <th class="py-2 px-4">Value</th>
                                 <th class="py-2 px-4">Gain/Loss</th>
                                 <th class="py-2 px-4">Actions</th>
@@ -227,6 +229,7 @@
                                 <th class="py-2 px-4">Quantity</th>
                                 <th class="py-2 px-4">Avg. Price</th>
                                 <th class="py-2 px-4">Price</th>
+                                <th class="py-2 px-4">Total Invested</th>
                                 <th class="py-2 px-4">Value</th>
                                 <th class="py-2 px-4">Gain/Loss</th>
                                 <th class="py-2 px-4">Actions</th>
@@ -939,6 +942,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentPrice = cachedPrice;
         // Only use cached price, do not fetch automatically
         let value = currentPrice ? currentPrice * stock.quantity : 0;
+        let totalInvested = stock.purchasePrice * stock.quantity;
         let currencySymbol = stock.currency === 'USD' ? '$' : '€';
         const placeholder = `
             <tr data-id="${stock.id}">
@@ -946,9 +950,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="py-2 px-4">${stock.quantity}</td>
                 <td class="py-2 px-4">${currencySymbol}${stock.purchasePrice.toFixed(2)}</td>
                 <td class="py-2 px-4 price-cell">${typeof currentPrice === 'number' ? `${currencySymbol}${currentPrice.toFixed(2)}` : 'N/A'}</td>
+                <td class="py-2 px-4">${currencySymbol}${totalInvested.toFixed(2)}</td>
                 <td class="py-2 px-4 value-cell">${typeof currentPrice === 'number' ? `${currencySymbol}${value.toFixed(2)}` : 'N/A'}</td>
                 <td class="py-2 px-4 gain-cell">${typeof currentPrice === 'number' ? calculateGainLoss(stock, currentPrice, stock.currency) : 'N/A'}</td>
-                <td class="py-2 px-4 action-cell">${getActionButtons(stock.id, 'stock')}</td>
+                <td class="py-2 px-4 action-cell">${getActionButtons(stock.id, arguments[2] === 'etf' ? 'etf' : 'stock')}</td>
             </tr>`;
         if (arguments[2] === 'etf') {
             etfsTbody.insertAdjacentHTML('beforeend', placeholder);
@@ -961,6 +966,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentPrice = cachedPrice;
         // Only use cached price, do not fetch automatically
         let value = currentPrice ? currentPrice * crypto.quantity : 0;
+        let totalInvested = crypto.purchasePrice * crypto.quantity;
         let currencySymbol = crypto.currency === 'USD' ? '$' : '€';
         const placeholder = `
             <tr data-id="${crypto.id}">
@@ -968,6 +974,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="py-2 px-4">${crypto.quantity}</td>
                 <td class="py-2 px-4">${currencySymbol}${crypto.purchasePrice.toFixed(2)}</td>
                 <td class="py-2 px-4 price-cell">${typeof currentPrice === 'number' ? `${currencySymbol}${currentPrice.toFixed(2)}` : 'N/A'}</td>
+                <td class="py-2 px-4">${currencySymbol}${totalInvested.toFixed(2)}</td>
                 <td class="py-2 px-4 value-cell">${typeof currentPrice === 'number' ? `${currencySymbol}${value.toFixed(2)}` : 'N/A'}</td>
                 <td class="py-2 px-4 gain-cell">${typeof currentPrice === 'number' ? calculateGainLoss(crypto, currentPrice, crypto.currency) : 'N/A'}</td>
                 <td class="py-2 px-4 action-cell">${getActionButtons(crypto.id, 'crypto')}</td>
