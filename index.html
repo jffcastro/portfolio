@@ -883,7 +883,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             callbacks: {
                                 label: function(context) {
                                     const label = context.label || '';
-                                    return `${label}`;
+                                    const value = context.parsed;
+                                    const percent = totalValue > 0 ? ((value / totalValue) * 100).toFixed(1) : '0.0';
+                                    return `${label}: €${value.toLocaleString(undefined, {maximumFractionDigits:2})} (${percent}%)`;
                                 }
                             }
                         }
