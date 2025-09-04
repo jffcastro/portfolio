@@ -1304,7 +1304,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const usd = eur * eurUsdRate;
         const btc = cached && cached.btc ? eur / cached.btc : null;
         const eth = cached && cached.eth ? eur / cached.eth : null;
-        const today = new Date().toISOString().slice(0,10);
+        // Use Lisbon local date (Europe/Lisbon)
+        function getLisbonDateString() {
+            const now = new Date();
+            // Get date in Europe/Lisbon timezone
+            const lisbonDate = now.toLocaleDateString('en-CA', { timeZone: 'Europe/Lisbon' });
+            // en-CA gives YYYY-MM-DD format
+            return lisbonDate;
+        }
+        const today = getLisbonDateString();
         let validatedHistory = loadValidatedHistory();
         // Remove any entry for today
         validatedHistory = validatedHistory.filter(h => h.date !== today);
