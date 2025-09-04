@@ -877,31 +877,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 options: {
                     plugins: {
                         legend: {
-                            display: true,
-                            position: 'right',
-                        },
-                        datalabels: {
-                            color: '#fff',
-                            font: { weight: 'bold', size: 14 },
-                            formatter: function(value, context) {
-                                const label = context.chart.data.labels[context.dataIndex];
-                                const percent = totalValue > 0 ? ((value / totalValue) * 100).toFixed(1) : '0.0';
-                                return `${label}\n${percent}%`;
-                            }
+                            display: false
                         },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
                                     const label = context.label || '';
-                                    const value = context.parsed;
-                                    const percent = totalValue > 0 ? ((value / totalValue) * 100).toFixed(1) : '0.0';
-                                    return `${label}: €${value.toLocaleString(undefined, {maximumFractionDigits: 2})} (${percent}%)`;
+                                    return `${label}`;
                                 }
                             }
                         }
                     }
-                },
-                plugins: [ChartDataLabels]
+                }
             });
         });
     // CS2 Items input logic (manual value, no currency selector)
