@@ -1336,6 +1336,26 @@ document.addEventListener('DOMContentLoaded', () => {
     debugOutput += `Static: ${staticValue.toFixed(2)}\n`;
     debugOutput += `CS2: ${cs2Value.toFixed(2)}\n`;
     debugOutput += `Total: ${(stocksValue + etfsValue + cryptoValue + staticValue + cs2Value).toFixed(2)}\n`;
+        // Add breakdown of all static asset types
+        const staticTypeMap = {};
+        portfolio.static.forEach(asset => {
+            let value = 0;
+            let currency = 'EUR';
+            if (asset.values && asset.values.length > 0) {
+                const latest = asset.values.reduce((a, b) => new Date(a.date) > new Date(b.date) ? a : b);
+                value = latest.value;
+                currency = latest.currency || 'EUR';
+            }
+            let valueEur = value;
+            if (currency === 'USD') valueEur = value / eurUsdRate;
+            const type = asset.type || 'Unknown';
+            if (!staticTypeMap[type]) staticTypeMap[type] = 0;
+            staticTypeMap[type] += valueEur;
+        });
+        debugOutput += 'Static Type Breakdown:\n';
+        Object.entries(staticTypeMap).forEach(([type, val]) => {
+            debugOutput += `  ${type}: ${val.toFixed(2)}\n`;
+        });
     window.historyPortfolioDebug = debugOutput;
             console.log(debugOutput);
     });
