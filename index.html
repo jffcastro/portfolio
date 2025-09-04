@@ -627,11 +627,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add more common mappings here
         };
         const searchId = idMap[id.toUpperCase()] || id.toLowerCase();
-        const url = `https://api.coingecko.com/api/v3/simple/price?ids=${searchId}&vs_currencies=usd`;
+        // Accept currency argument, default to USD
+        let vsCurrency = 'usd';
+        if (arguments.length > 1 && arguments[1]) {
+            vsCurrency = arguments[1].toLowerCase();
+        }
+        const url = `https://api.coingecko.com/api/v3/simple/price?ids=${searchId}&vs_currencies=${vsCurrency}`;
         try {
             const response = await fetch(url);
             const data = await response.json();
-            const price = data[searchId]?.usd;
+            const price = data[searchId]?.[vsCurrency];
             if (!price) console.error(`Could not fetch price for crypto: ${id} (searched for ${searchId})`, data);
             return price;
         } catch (error) {
@@ -752,8 +757,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         let cryptoPromises = portfolio.crypto.map(async crypto => {
             let price = priceCache.crypto[crypto.name];
+            // If price is not cached, fetch in correct currency
+            if (typeof price !== 'number') {
+                price = await fetchCryptoPrice(crypto.name, crypto.currency || 'USD');
+                priceCache.crypto[crypto.name] = price;
+            }
             let value = price ? price * crypto.quantity : 0;
             let valueEur = value;
+            // If asset is in USD, convert to EUR
             if (crypto.currency === 'USD') valueEur = value / eurUsdRate;
             cryptoValue += valueEur;
             renderCrypto(crypto, price);
